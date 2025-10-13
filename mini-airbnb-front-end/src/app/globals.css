@@ -3,22 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #1677ff;
-  --muted: #64748b;
+  --muted: rgba(23, 23, 23, 0.6);
+  --elevated-bg: #ffffff;
+  --border: rgba(0, 0, 0, 0.12);
 }
 
 .dark {
-  --background: #0b1220;
-  --foreground: #e5e7eb;
-  --primary: #69b1ff;
-  --muted: #9ca3af;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-muted: var(--muted);
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --muted: rgba(237, 237, 237, 0.65);
+  --elevated-bg: #0f0f0f;
+  --border: rgba(255, 255, 255, 0.15);
 }
 
 html, body {
@@ -28,15 +23,144 @@ html, body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  transition: background-color .25s ease, color .25s ease;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ant-select,
+.ant-input,
+.ant-input-number,
+.ant-slider,
+.ant-switch,
+.ant-space-compact,
+.ant-card,
+.ant-empty,
+.ant-typography,
+.ant-form-item-label > label {
+  color: var(--foreground) !important;
 }
 
-.app-surface {
-  background: color-mix(in oklab, var(--background) 90%, black 10%);
-  border-radius: 0.75rem;
+.ant-input,
+.ant-input-number,
+.ant-select-selector,
+.ant-card,
+.ant-empty {
+  background-color: var(--elevated-bg) !important;
+  border-color: var(--border) !important;
 }
 
-.link {
-  color: var(--color-primary);
+.ant-input::placeholder,
+.ant-select-selection-placeholder,
+.ant-select-selection-item,
+.ant-input-number input::placeholder,
+.ant-form-item-label > label,
+.ant-typography-secondary,
+.ant-typography {
+  color: var(--muted) !important;
+}
+
+.ant-input[disabled],
+.ant-select-disabled .ant-select-selector,
+.ant-input-number-disabled {
+  background-color: var(--elevated-bg) !important;
+  opacity: 0.6;
+}
+:root {
+  --primary: #1677ff;
+}
+
+.dark {
+  --primary: #1677ff;
+}
+
+.ant-btn {
+  color: var(--foreground) !important;
+  background-color: var(--elevated-bg) !important;
+  border-color: var(--border) !important;
+}
+
+.ant-btn:hover,
+.ant-btn:focus {
+  color: var(--foreground) !important;
+  background-color: color-mix(in oklab, var(--elevated-bg) 92%, var(--foreground) 8%) !important;
+  border-color: var(--border) !important;
+}
+
+.ant-btn[disabled],
+.ant-btn-disabled {
+  color: var(--muted) !important;
+  background-color: var(--elevated-bg) !important;
+  border-color: var(--border) !important;
+  opacity: 0.7;
+}
+
+.ant-btn-primary {
+  color: #ffffff !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  color: #ffffff !important;
+  background-color: color-mix(in oklab, var(--primary) 88%, #000000 12%) !important;
+  border-color: color-mix(in oklab, var(--primary) 88%, #000000 12%) !important;
+}
+
+
+.ant-input,
+.ant-input-number,
+.ant-select-selector {
+  background-color: var(--elevated-bg) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+.ant-input::placeholder,
+.ant-select-selection-placeholder,
+.ant-input-number input::placeholder {
+  color: var(--muted) !important;
+}
+
+.ant-input-number-handler-up-inner,
+.ant-input-number-handler-down-inner {
+  color: var(--foreground) !important;
+}
+
+.ant-select-dropdown,
+.ant-dropdown,
+.ant-picker-dropdown {
+  background-color: var(--elevated-bg) !important;
+  color: var(--foreground) !important;
+}
+
+.ant-select-item-option-content {
+  color: var(--foreground) !important;
+}
+
+.ant-input:hover,
+.ant-select-selector:hover,
+.ant-input-number:hover {
+  border-color: var(--primary) !important;
+}
+
+.ant-input:focus,
+.ant-select-focused .ant-select-selector,
+.ant-input-number-focused {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 30%, transparent) !important;
+}
+
+.ant-btn-default {
+  color: var(--foreground) !important;
+  background-color: var(--elevated-bg) !important;
+  border-color: var(--border) !important;
+}
+
+.ant-btn-default:hover {
+  background-color: color-mix(in oklab, var(--elevated-bg) 85%, var(--foreground) 15%) !important;
+}
+
+.ant-btn-primary {
+  color: #fff !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
 }

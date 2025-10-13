@@ -2,6 +2,79 @@
   "navbar": {
     "home": "Home",
     "about": "About",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "locales": {
+    "pt": "BR PT",
+    "en": "EN US"
+  },
+  "property": {
+    "perNight": "per night",
+    "guests": "guests",
+    "bedrooms": "bedrooms",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "viewDetails": "View details",
+    "ratingCount": "{count, plural, one {# review} other {# reviews}}"
+  },
+  "details": {
+    "perNight": "per night",
+    "ratingCount": "{count, plural, one {# review} other {# reviews}}",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "amenitiesTitle": "Amenities",
+    "noAmenities": "No amenities provided",
+    "descriptionTitle": "Description",
+    "simulateBooking": "Simulate booking",
+    "bookingSuccessTitle": "Booking simulated",
+    "bookingSuccessMessage": "Your booking was simulated successfully.",
+    "ok": "Ok",
+    "unavailableMsg": "This property is currently unavailable.",
+    "errorTitle": "Load error",
+    "errorSubtitle": "We couldn't load this property.",
+    "book": "Simulate booking",
+    "booked": "Booking simulated successfully!",
+    "pricePerNight": "Price per night",
+    "amenities": "Amenities",
+    "description": "Description"
+  },
+  "amenities": {
+    "wifi": "Wi-Fi",
+    "pool": "Pool",
+    "fireplace": "Fireplace",
+    "airConditioning": "Air conditioning",
+    "kitchen": "Kitchen",
+    "parking": "Parking"
+  },
+  "filters": {
+    "city": "City",
+    "state": "State",
+    "type": "Property type",
+    "priceRange": "Price range",
+    "guests": "Guests",
+    "bedrooms": "Bedrooms",
+    "availableOnly": "Only available",
+    "amenities": {
+      "title": "Amenities",
+      "wifi": "Wi-Fi",
+      "pool": "Pool",
+      "fireplace": "Fireplace",
+      "airConditioning": "Air conditioning",
+      "kitchen": "Kitchen",
+      "parking": "Parking"
+    },
+    "types": {
+      "apartment": "Apartment",
+      "house": "House",
+      "chalet": "Chalet",
+      "cabin": "Cabin",
+      "flat": "Flat"
+    },
+    "apply": "Apply",
+    "clear": "Clear"
+  },
+  "grid": {
+    "noResults": "No properties found"
   }
 }

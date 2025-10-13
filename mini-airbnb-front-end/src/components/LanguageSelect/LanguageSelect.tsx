@@ -1,35 +1,44 @@
 "use client";
 
-import { Select } from "antd";
-import { usePathname, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import {useEffect, useMemo, useState} from "react";
+import {Select} from "antd";
+import {usePathname, useRouter} from "next/navigation";
+import {useLocale, useTranslations} from "next-intl";
 
-const locales = ["pt", "en"] as const;
-type Locale = (typeof locales)[number];
+type LocaleCode = "pt" | "en";
 
 export default function LanguageSelect() {
+  const translateLocales = useTranslations("locales");
   const router = useRouter();
   const pathname = usePathname();
+  const rawLocale = useLocale();
+  const currentLocale: LocaleCode = rawLocale === "pt" || rawLocale === "en" ? (rawLocale as LocaleCode) : "pt";
+  const [isMounted, setIsMounted] = useState(false);
 
-  const currentLocale: Locale = useMemo(() => {
-    const seg = pathname.split("/")[1];
-    return (locales as readonly string[]).includes(seg) ? (seg as Locale) : "pt";
-  }, [pathname]);
+  useEffect(() => setIsMounted(true), []);
 
-  const onChange = (locale: Locale) => {
-    const rest = pathname.replace(/^\/(pt|en)/, "");
-    router.push(`/${locale}${rest || ""}`);
+  const selectOptions = useMemo(
+    () => [
+      {value: "pt" as LocaleCode, label: translateLocales("pt")},
+      {value: "en" as LocaleCode, label: translateLocales("en")}
+    ],
+    [translateLocales]
+  );
+
+  if (!isMounted) return null;
+
+  const handleChangeLocale = (nextLocale: LocaleCode) => {
+    const segments = pathname.split("/");
+    segments[1] = nextLocale;
+    router.push(segments.join("/") || "/");
   };
 
   return (
-    <Select
+    <Select<LocaleCode>
       value={currentLocale}
-      onChange={onChange}
-      style={{ width: 110 }}
-      options={[
-        { value: "pt", label: "🇧🇷 PT" },
-        { value: "en", label: "🇺🇸 EN" }
-      ]}
+      onChange={handleChangeLocale}
+      style={{width: 110}}
+      options={selectOptions}
     />
   );
 }

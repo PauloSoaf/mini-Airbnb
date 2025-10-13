@@ -1,10 +1,11 @@
+import "antd/dist/reset.css";
 import "../globals.css";
 import Providers from "../providers";
-
 import NavBar from "@/components/NavBar/NavBar";
+import {AntdRegistry} from "@ant-design/nextjs-registry";
 
 export function generateStaticParams() {
-  return [{ locale: "pt" }, { locale: "en" }];
+  return [{locale: "pt"}, {locale: "en"}];
 }
 
 export default async function LocaleLayout({
@@ -12,18 +13,20 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: "pt" | "en" }>;
+  params: Promise<{locale: "pt" | "en"}>;
 }) {
-  const { locale } = await params;
+  const {locale} = await params;
   const messages = (await import(`@/i18n/locales/${locale}.json`)).default;
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
-        <Providers messages={messages} locale={locale}>
-          <NavBar locale={locale} />
-          <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
-        </Providers>
+        <AntdRegistry>
+          <Providers messages={messages} locale={locale}>
+            <NavBar locale={locale} />
+            <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+          </Providers>
+        </AntdRegistry>
       </body>
     </html>
   );

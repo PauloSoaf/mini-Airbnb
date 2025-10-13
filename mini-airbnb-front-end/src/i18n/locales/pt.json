@@ -2,6 +2,79 @@
   "navbar": {
     "home": "Início",
     "about": "Sobre",
-    "language": "Idioma"
+    "language": "Idioma",
+    "theme": "Tema"
+  },
+  "locales": {
+    "pt": "BR PT",
+    "en": "EN US"
+  },
+  "property": {
+    "perNight": "por noite",
+    "guests": "hóspedes",
+    "bedrooms": "quartos",
+    "available": "Disponível",
+    "unavailable": "Indisponível",
+    "viewDetails": "Ver detalhes",
+    "ratingCount": "{count, plural, one {# avaliação} other {# avaliações}}"
+  },
+  "details": {
+    "perNight": "por noite",
+    "ratingCount": "{count, plural, one {# avaliação} other {# avaliações}}",
+    "available": "Disponível",
+    "unavailable": "Indisponível",
+    "amenitiesTitle": "Comodidades",
+    "noAmenities": "Nenhuma comodidade informada",
+    "descriptionTitle": "Descrição",
+    "simulateBooking": "Simular reserva",
+    "bookingSuccessTitle": "Reserva simulada",
+    "bookingSuccessMessage": "Sua reserva foi simulada com sucesso.",
+    "ok": "Ok",
+    "unavailableMsg": "Este imóvel não está disponível no momento.",
+    "errorTitle": "Erro ao carregar",
+    "errorSubtitle": "Não foi possível carregar os dados do imóvel.",
+        "book": "Simular reserva",
+    "booked": "Reserva simulada com sucesso!",
+    "pricePerNight": "Preço por noite",
+    "amenities": "Comodidades",
+    "description": "Descrição"
+  },
+  "amenities": {
+    "wifi": "Wi-Fi",
+    "pool": "Piscina",
+    "fireplace": "Lareira",
+    "airConditioning": "Ar-condicionado",
+    "kitchen": "Cozinha",
+    "parking": "Estacionamento"
+  },
+  "filters": {
+    "city": "Cidade",
+    "state": "Estado",
+    "type": "Tipo de imóvel",
+    "priceRange": "Faixa de preço",
+    "guests": "Hóspedes",
+    "bedrooms": "Quartos",
+    "availableOnly": "Somente disponíveis",
+    "amenities": {
+      "title": "Comodidades",
+      "wifi": "Wi-Fi",
+      "pool": "Piscina",
+      "fireplace": "Lareira",
+      "airConditioning": "Ar-condicionado",
+      "kitchen": "Cozinha",
+      "parking": "Estacionamento"
+    },
+    "types": {
+      "apartment": "Apartamento",
+      "house": "Casa",
+      "chalet": "Chalé",
+      "cabin": "Cabana",
+      "flat": "Flat"
+    },
+    "apply": "Aplicar",
+    "clear": "Limpar"
+  },
+  "grid": {
+    "noResults": "Nenhum imóvel encontrado"
   }
 }
