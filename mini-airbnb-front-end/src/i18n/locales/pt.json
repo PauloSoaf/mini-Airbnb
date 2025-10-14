@@ -35,9 +35,16 @@
     "errorSubtitle": "Não foi possível carregar os dados do imóvel.",
         "book": "Simular reserva",
     "booked": "Reserva simulada com sucesso!",
+    "bookingErrorMessage": "Erro ao simular reserva. Tente novamente.",
     "pricePerNight": "Preço por noite",
     "amenities": "Comodidades",
-    "description": "Descrição"
+    "description": "Descrição",
+    "host": "Anfitrião",
+    "superHost": "Super Host",
+    "since": "Desde",
+    "bedrooms": "quartos",
+    "guests": "hóspedes",
+    "loading": "Carregando..."
   },
   "amenities": {
     "wifi": "Wi-Fi",
@@ -80,5 +87,6 @@
   ,
   "loadError": "Erro ao carregar lista",
   "retry": "Tentar novamente",
-  "loading": "Carregando..."
+  "loading": "Carregando...",
+  "apiError": "Erro ao conectar com o servidor. Verifique se a API está rodando."
 }

@@ -23,7 +23,7 @@ export default function PropertyCard({
 
   return (
     <Link href={`/${locale}/property/${id}`} className="block">
-      <Card hoverable cover={<Image src={imageUrl} alt={title} preview={false} />}>
+      <Card hoverable cover={<Image src={imageUrl} alt={title} preview={false} placeholder={<div className="w-full h-48 bg-[var(--elevated-bg)] animate-pulse" />} loading="lazy" fallback="/window.svg" />}>
         <Space direction="vertical" className="w-full">
           <div className="flex items-start justify-between">
             <Typography.Text strong>{title}</Typography.Text>
@@ -41,7 +41,7 @@ export default function PropertyCard({
               R$ {pricePerNight} {t("perNight")}
             </Typography.Text>
             <div className="flex items-center gap-2">
-              <Rate allowHalf disabled value={rating} />
+              <Rate allowHalf disabled value={rating} style={{ fontSize: 12 }} />
               <span className="text-sm text-[var(--muted)]">
                 {t("ratingCount", {count: reviewsCount})}
               </span>

@@ -1,8 +1,8 @@
 "use client";
 
-import {useState, useMemo} from "react";
+import {useState, useMemo, useEffect} from "react";
 import {useQuery} from "@tanstack/react-query";
-import {Alert, Button, Skeleton} from "antd";
+import {Alert, Button, Skeleton, message} from "antd";
 import {useTranslations} from "next-intl";
 import FiltersBar from "@/components/Filters/FiltersBar";
 import PropertyGrid from "@/components/PropertyGrid/PropertyGrid";
@@ -22,6 +22,7 @@ const initialFilters: FiltersState = {
 
 export default function Home() {
   const t = useTranslations();
+  const [messageApi, contextHolder] = message.useMessage();
   const [filtersDraft, setFiltersDraft] = useState<FiltersState>(initialFilters);
   const [filtersApplied, setFiltersApplied] = useState<FiltersState>(initialFilters);
   const [filteredItems, setFilteredItems] = useState<any[]>([]);
@@ -30,17 +31,28 @@ export default function Home() {
     data: sourceItems,
     isLoading: isLoadingItems,
     isError: isErrorItems,
-    refetch: refetchItems
+    refetch: refetchItems,
+    error: queryError
   } = useQuery({
     queryKey: ["properties"],
     queryFn: () => getProperties()
   });
+
+  useEffect(() => {
+    if (isErrorItems && queryError) {
+      messageApi.error(t("apiError"));
+      console.error("Erro ao carregar propriedades:", queryError);
+    }
+  }, [isErrorItems, queryError, messageApi, t]);
 
   const visibleItems = useMemo(() => filteredItems.length > 0 ? filteredItems : (sourceItems ?? []), [filteredItems, sourceItems]);
 
   const handleApply = (filtered: any[], appliedFilters: FiltersState) => {
     setFilteredItems(filtered);
     setFiltersApplied(appliedFilters);
+    if (filtered.length === 0) {
+      messageApi.info(t("noResults"));
+    }
   };
   
   const handleClear = () => {
@@ -51,6 +63,7 @@ export default function Home() {
 
   return (
     <div className="space-y-6">
+      {contextHolder}
       <FiltersBar
         value={filtersDraft}
         onChange={setFiltersDraft}

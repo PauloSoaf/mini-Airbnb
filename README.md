@@ -1,42 +1,162 @@
-Mini-Airbnb
+# Mini Airbnb - Frontend Application
 
-Aplicação front-end em Next.js integrada a uma mock API para listagem, filtros, detalhes e simulação de reserva de imóveis, com suporte a i18n, temas e React Query.
+Uma aplicação frontend desenvolvida com Next.js 15 e React que simula uma plataforma de aluguel por temporada, similar ao Airbnb.
 
-Instalação e execução
+## 🚀 Funcionalidades
 
-- Requisitos: Node.js 18+.
-- Backend (mock API):
-  - `cd mock-api-temporada`
-  - `npm install`
-  - `npm start` (disponível em `http://localhost:3001`)
-- Front-end:
-  - `cd mini-airbnb-front-end`
-  - `npm install`
-  - `npm run dev` (disponível em `http://localhost:3000`)
-- Configuração opcional:
-  - Defina `NEXT_PUBLIC_API_BASE_URL` para alterar a URL da API (padrão `http://localhost:3001`).
+### ✅ Implementadas
 
-Funcionalidades
+- **Listagem de Imóveis**
+  - Exibição de imóveis com imagem, título, localização, preço, avaliação e disponibilidade
+  - Loading states com skeletons
+  - Lazy loading de imagens
+  - Responsividade total
 
-- Listagem de imóveis com imagem, título, localização, preço por noite, rating, quantidade de avaliações e disponibilidade.
-- Filtros por cidade, estado, tipo de imóvel, faixa de preço, hóspedes, quartos, comodidades e somente disponíveis.
-- Página de detalhes com galeria, comodidades, descrição e status de disponibilidade.
-- Simulação de reserva com confirmação via modal e integração à rota `/bookings`.
-- Feedback de carregamento e erro com componentes AntD e mensagens localizadas.
+- **Filtros Funcionais**
+  - Filtro por cidade, estado e tipo de imóvel
+  - Faixa de preço (mínimo e máximo)
+  - Capacidade de hóspedes e quantidade de quartos
+  - Comodidades (Wi-Fi, Piscina, Lareira, etc.)
+  - Filtro para mostrar apenas imóveis disponíveis
+  - Limpar filtros com um clique
 
-Decisões técnicas
+- **Página de Detalhes**
+  - Galeria de imagens com lazy loading
+  - Todas as informações do imóvel
+  - Lista de comodidades
+  - Informações do anfitrião (nome, super host, desde quando)
+  - Loading states apropriados
 
-- Next 15.5 com App Router para rotas dinâmicas por locale e detalhes de imóveis.
-- AntD para UI, com ConfigProvider e tokens ajustados ao tema claro/escuro via `next-themes`.
-- Tailwind v4 para utilitários de layout e tema (CSS custom properties).
-- React Query para cache, revalidação e feedback de estados de rede.
-- `next-intl` para i18n com `en` e `pt`, todas as mensagens de UI usam chaves nos locales.
-- Axios com um cliente centralizado (`src/lib/api/client.ts`) e transformações de dados no módulo de propriedades.
+- **Sistema de Reserva**
+  - Modal de simulação de reserva
+  - Toasts de sucesso/erro
+  - Loading states durante a simulação
+  - 20% de chance de erro (conforme API)
 
-Melhorias futuras
+- **Internacionalização (i18n)**
+  - Suporte para Português (BR) e Inglês (US)
+  - Todas as mensagens traduzidas
+  - Switch de idioma na navbar
 
-- Validação de inputs de filtros com formulários controlados e schema.
-- Paginação e ordenação na lista.
-- Melhor mapeamento i18n de tipos vindos da API para labels.
-- Testes com Jest e React Testing Library para componentes críticos e hooks.
-- Estados de reserva com datas selecionáveis e cálculo de preço.
+- **Temas (Claro/Escuro)**
+  - Suporte completo para tema claro e escuro
+  - Switch de tema na navbar
+  - Variáveis CSS customizadas
+
+- **Feedback de Usuário**
+  - Toasts para ações do usuário
+  - Loading states em todas as requisições
+  - Mensagens de erro apropriadas
+  - Skeletons para carregamento de conteúdo
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Framework**: Next.js 15 (App Router)
+- **UI Library**: React 19
+- **Componentes**: Ant Design 5.x
+- **Estilos**: Tailwind CSS
+- **Estado**: React Query (TanStack Query)
+- **Internacionalização**: next-intl
+- **Temas**: next-themes
+- **HTTP Client**: Axios
+- **TypeScript**: Para type safety
+
+## 📦 Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js 18+ ou Bun 1.0+
+- NPM ou Bun
+
+### Passos
+
+1. **Clone o repositório**
+   ```bash
+   git clone [URL_DO_REPOSITORIO]
+   cd mini-airbnb
+   ```
+
+2. **Instale as dependências do frontend**
+   ```bash
+   cd mini-airbnb-front-end
+   npm install
+   # ou
+   bun install
+   ```
+
+3. **Configure a API Mock** (em outro terminal)
+   ```bash
+   cd mock-api-temporada
+   npm install
+   npm start
+   # ou
+   bun install
+   bun start
+   ```
+
+4. **Execute o frontend**
+   ```bash
+   cd mini-airbnb-front-end
+   npm run dev
+   # ou
+   bun dev
+   ```
+
+5. **Acesse a aplicação**
+   - Frontend: http://localhost:3002
+   - API Mock: http://localhost:3001
+
+## 🎯 Decisões Técnicas
+
+### Por que Next.js 15 com App Router?
+- Melhor performance com Server Components
+- Suporte nativo para internacionalização
+- Melhor SEO e carregamento de páginas
+
+### Por que Ant Design?
+- Componentes robustos e bem testados
+- Excelente suporte para temas
+- Documentação completa
+
+### Por que React Query?
+- Gerenciamento eficiente de estado de servidor
+- Cache automático
+- Refetching inteligente
+- Loading states integrados
+
+### Por que Tailwind CSS?
+- Desenvolvimento rápido
+- CSS pequeno e otimizado
+- Excelente suporte para temas
+
+## 🚀 Melhorias Futuras
+
+Com mais tempo, implementaria:
+
+1. **Performance**
+   - Implementar infinite scroll na listagem
+   - Adicionar Service Worker para funcionamento offline
+   - Otimizar imagens com next/image
+
+2. **Funcionalidades**
+   - Sistema de favoritos
+   - Comparação de imóveis
+   - Mapa interativo com localização dos imóveis
+   - Sistema de reviews e avaliações
+
+3. **UX/UI**
+   - Animações mais sofisticadas
+   - Dark mode automático baseado no sistema
+   - Acessibilidade melhorada (WCAG)
+   - Mobile-first com touch gestures
+
+4. **Backend**
+   - Autenticação de usuários
+   - Sistema de favoritos persistente
+   - Histórico de buscas
+   - Cache distribuído
+
+5. **Testing**
+   - Testes unitários com Jest
+   - Testes de integração com Cypress
+   - Testes de acessibilidade

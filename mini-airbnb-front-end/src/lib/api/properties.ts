@@ -48,13 +48,11 @@ const transformDetail = (raw: any): PropertyDetail => ({
 
 export const getProperties = async (filters?: FiltersState): Promise<PropertyItem[]> => {
   try {
-    console.log("Buscando propriedades da API...");
     const {data} = await api.get("/properties");
-    console.log("Dados recebidos:", data);
     return Array.isArray(data) ? data.map(transformItem) : [];
   } catch (error) {
     console.error("Erro ao buscar propriedades:", error);
-    return [];
+    throw error;
   }
 };
 
@@ -62,9 +60,8 @@ export const getPropertyById = async (id: string): Promise<PropertyDetail> => {
   try {
     const {data} = await api.get(`/properties/${id}`);
     return transformDetail(data);
-  } catch (error) {
-    console.error(`Erro ao buscar propriedade ${id}:`, error);
-    throw error;
+  } catch {
+    throw new Error(`Property with id ${id} not found`);
   }
 };
 
@@ -73,12 +70,12 @@ export const simulateBooking = async (payload: {
   checkIn: string;
   checkOut: string;
   guests: number;
+  customerName?: string;
 }) => {
   try {
     const {data} = await api.post("/bookings", payload);
     return data;
-  } catch (error) {
-    console.error("Erro ao simular reserva:", error);
-    throw error;
+  } catch {
+    throw new Error("Failed to simulate booking");
   }
 };

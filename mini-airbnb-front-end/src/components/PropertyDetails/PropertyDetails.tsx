@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {Alert, Button, Card, Empty, Image, Modal, Rate, Space, Tag} from "antd";
+import {Alert, Button, Card, Empty, Image, Modal, Rate, Space, Tag, message} from "antd";
 import {useTranslations} from "next-intl";
 import {useQuery, useMutation} from "@tanstack/react-query";
 import {getPropertyById, simulateBooking} from "@/lib/api/properties";
@@ -11,14 +11,32 @@ type Props = { id: string };
 export default function PropertyDetails({ id }: Props) {
   const t = useTranslations("details");
   const [open, setOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const { data: item, isLoading, isError, refetch } = useQuery({
     queryKey: ["property", id],
     queryFn: () => getPropertyById(id)
   });
 
-  const booking = useMutation({
-    mutationFn: () => simulateBooking({ propertyId: id, checkIn: new Date().toISOString(), checkOut: new Date().toISOString(), guests: 2 })
+const booking = useMutation({
+    mutationFn: () =>
+      simulateBooking({
+        propertyId: id!,
+        checkIn: new Date().toISOString(),
+        checkOut: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        guests: 2,
+        customerName: "João",
+      }),
+    onSuccess: () => {
+      messageApi.success({
+        content: t("bookingSuccessMessage"),
+        duration: 4,
+        icon: <span>🎉</span>
+      });
+    },
+    onError: () => {
+      messageApi.error(t("bookingErrorMessage"));
+    }
   });
 
   if (isError) {
@@ -43,13 +61,33 @@ export default function PropertyDetails({ id }: Props) {
 
   return (
     <>
+      {contextHolder}
       <div className="grid gap-6 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <Image.PreviewGroup>
             <div className="grid grid-cols-2 gap-2">
-              <Image src={item.images[0]} alt={item.title} className="col-span-2 rounded-xl" />
-              <Image src={item.images[1] || item.images[0]} alt="" />
-              <Image src={item.images[2] || item.images[0]} alt="" />
+              <Image 
+                src={item.images[0]} 
+                alt={item.title} 
+                className="col-span-2 rounded-xl" 
+                placeholder={<div className="w-full h-64 bg-[var(--elevated-bg)] animate-pulse rounded-xl" />} 
+                loading="lazy"
+                fallback="/window.svg"
+              />
+              <Image 
+                src={item.images[1] || item.images[0]} 
+                alt="" 
+                placeholder={<div className="w-full h-32 bg-[var(--elevated-bg)] animate-pulse rounded-xl" />} 
+                loading="lazy"
+                fallback="/window.svg"
+              />
+              <Image 
+                src={item.images[2] || item.images[0]} 
+                alt="" 
+                placeholder={<div className="w-full h-32 bg-[var(--elevated-bg)] animate-pulse rounded-xl" />} 
+                loading="lazy"
+                fallback="/window.svg"
+              />
             </div>
           </Image.PreviewGroup>
         </div>
