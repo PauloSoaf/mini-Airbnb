@@ -65,14 +65,15 @@ Uma aplicação frontend desenvolvida com Next.js 15 e React que simula uma plat
 
 ### Pré-requisitos
 
-- Node.js 18+ ou Bun 1.0+
-- NPM ou Bun
+- Node.js 18+
+- NPM
+- git
 
 ### Passos
 
 1. **Clone o repositório**
    ```bash
-   git clone [URL_DO_REPOSITORIO]
+   git clone https://github.com/PauloSoaf/mini-Airbnb.git
    cd mini-airbnb
    ```
 
@@ -80,8 +81,6 @@ Uma aplicação frontend desenvolvida com Next.js 15 e React que simula uma plat
    ```bash
    cd mini-airbnb-front-end
    npm install
-   # ou
-   bun install
    ```
 
 3. **Configure a API Mock** (em outro terminal)
@@ -89,22 +88,35 @@ Uma aplicação frontend desenvolvida com Next.js 15 e React que simula uma plat
    cd mock-api-temporada
    npm install
    npm start
-   # ou
-   bun install
-   bun start
-   ```
+
 
 4. **Execute o frontend**
    ```bash
    cd mini-airbnb-front-end
    npm run dev
-   # ou
-   bun dev
    ```
 
 5. **Acesse a aplicação**
-   - Frontend: http://localhost:3002
+   - Frontend: http://localhost:3000
    - API Mock: http://localhost:3001
+
+## 🔐 Variáveis de Ambiente
+
+As variáveis de ambiente não devem ser versionadas. Este projeto segue boas práticas:
+- `.env.development` está no `.gitignore`
+- Incluí um arquivo `.env.example` para servir de base
+
+### Como configurar
+1. Crie o arquivo mini-airbnb-front-end/.env.development 
+
+2. Edite o `.env.development` conforme seu ambiente local:
+   ```env
+   NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+   ```
+3. Reinicie o servidor de desenvolvimento para aplicar as variáveis:
+   ```bash
+   npm run dev
+   ```
 
 ## 🎯 Decisões Técnicas
 
