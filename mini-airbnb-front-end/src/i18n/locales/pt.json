@@ -77,4 +77,8 @@
   "grid": {
     "noResults": "Nenhum imóvel encontrado"
   }
+  ,
+  "loadError": "Erro ao carregar lista",
+  "retry": "Tentar novamente",
+  "loading": "Carregando..."
 }

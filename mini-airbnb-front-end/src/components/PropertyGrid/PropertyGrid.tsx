@@ -2,7 +2,7 @@
 
 import {Empty} from "antd";
 import PropertyCard from "@/components/PropertyCard/PropertyCard";
-import {PropertyItem} from "@/types/property";
+import {PropertyItem} from "@/lib/api/properties";
 import {useTranslations} from "next-intl";
 
 type PropertyGridProps = {

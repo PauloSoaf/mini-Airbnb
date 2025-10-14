@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {useLocale, useTranslations} from "next-intl";
 import {Card, Image, Rate, Space, Tag, Typography} from "antd";
-import {PropertyItem} from "@/types/property";
+import {PropertyItem} from "@/lib/api/properties";
 
 export default function PropertyCard({
   id,

@@ -1,27 +1,45 @@
 "use client";
 
-import {useMemo, useState} from "react";
-import {Button, Card, Empty, Image, Modal, Rate, Tag} from "antd";
+import {useState} from "react";
+import {Alert, Button, Card, Empty, Image, Modal, Rate, Space, Tag} from "antd";
 import {useTranslations} from "next-intl";
-import { mockProperties } from "@/lib/mockProperties";
+import {useQuery, useMutation} from "@tanstack/react-query";
+import {getPropertyById, simulateBooking} from "@/lib/api/properties";
 
-type Props = {id: string};
+type Props = { id: string };
 
-export default function PropertyDetails({id}: Props) {
+export default function PropertyDetails({ id }: Props) {
   const t = useTranslations("details");
   const [open, setOpen] = useState(false);
 
-  const item = useMemo(() => mockProperties.find((p) => String(p.id) === String(id)), [id]);
+  const { data: item, isLoading, isError, refetch } = useQuery({
+    queryKey: ["property", id],
+    queryFn: () => getPropertyById(id)
+  });
 
-  if (!item) {
+  const booking = useMutation({
+    mutationFn: () => simulateBooking({ propertyId: id, checkIn: new Date().toISOString(), checkOut: new Date().toISOString(), guests: 2 })
+  });
+
+  if (isError) {
     return (
-      <Card className="bg-[var(--background)] text-[var(--foreground)]">
-        <Empty description="Not found" />
-      </Card>
+      <Alert
+        type="error"
+        showIcon
+        message={t("errorTitle")}
+        description={t("errorSubtitle")}
+        action={<Button onClick={() => refetch()}>OK</Button>}
+      />
     );
   }
 
-  const images = [item.imageUrl, item.imageUrl + "&1", item.imageUrl + "&2"];
+  if (isLoading || !item) {
+    return (
+      <Card className="bg-[var(--background)] text-[var(--foreground)]">
+        <Empty description={t("loading")} />
+      </Card>
+    );
+  }
 
   return (
     <>
@@ -29,9 +47,9 @@ export default function PropertyDetails({id}: Props) {
         <div className="lg:col-span-3">
           <Image.PreviewGroup>
             <div className="grid grid-cols-2 gap-2">
-              <Image src={images[0]} alt={item.title} className="col-span-2 rounded-xl" />
-              <Image src={images[1]} alt="" />
-              <Image src={images[2]} alt="" />
+              <Image src={item.images[0]} alt={item.title} className="col-span-2 rounded-xl" />
+              <Image src={item.images[1] || item.images[0]} alt="" />
+              <Image src={item.images[2] || item.images[0]} alt="" />
             </div>
           </Image.PreviewGroup>
         </div>
@@ -66,20 +84,59 @@ export default function PropertyDetails({id}: Props) {
           <div>
             <h2 className="font-medium mb-1">{t("description")}</h2>
             <p className="text-[var(--muted)]">
-              {item.title} — {item.bedrooms} quartos • {item.guests} hóspedes • {item.type}
+              {item.title} — {item.bedrooms} {t("bedrooms")} • {item.guests} {t("guests")} • {item.type}
             </p>
           </div>
 
           <div>
-            <Button type="primary" onClick={() => setOpen(true)} disabled={!item.isAvailable}>
-              {t("book")}
-            </Button>
+            <Space>
+              <Button type="primary" onClick={() => setOpen(true)} disabled={!item.isAvailable || booking.isPending}>
+                {t("book")}
+              </Button>
+              {booking.isError && <Tag color="red">{t("errorTitle")}</Tag>}
+            </Space>
           </div>
         </div>
       </div>
 
-      <Modal open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)} okText="OK">
-        {t("booked")}
+      <Modal
+        title={booking.isSuccess ? t("bookingSuccessTitle") : t("simulateBooking")}
+        open={open}
+        onCancel={() => setOpen(false)}
+        onOk={async () => {
+          if (!booking.isSuccess) {
+            await booking.mutateAsync();
+          } else {
+            setOpen(false);
+          }
+        }}
+        okText={booking.isSuccess ? t("ok") : t("book")}
+        confirmLoading={booking.isPending}
+      >
+        {booking.isPending ? (
+          <div className="flex justify-center py-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[var(--color-primary)]"></div>
+          </div>
+        ) : booking.isSuccess ? (
+          <div className="space-y-4">
+            <p>{t("bookingSuccessMessage")}</p>
+            <div className="bg-[var(--background)] border border-[var(--border)] p-4 rounded-lg">
+              <p className="font-medium">{item.title}</p>
+              <p>{item.city}, {item.state}</p>
+              <p>R$ {item.pricePerNight} {t("perNight")}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p>{t("simulateBooking")}</p>
+            <div className="bg-[var(--background)] border border-[var(--border)] p-4 rounded-lg">
+              <p className="font-medium">{item.title}</p>
+              <p>{item.city}, {item.state}</p>
+              <p>R$ {item.pricePerNight} {t("perNight")}</p>
+              <p>{item.bedrooms} {t("bedrooms")} • {item.guests} {t("guests")}</p>
+            </div>
+          </div>
+        )}
       </Modal>
     </>
   );

@@ -24,6 +24,7 @@ export default function Home() {
   const t = useTranslations();
   const [filtersDraft, setFiltersDraft] = useState<FiltersState>(initialFilters);
   const [filtersApplied, setFiltersApplied] = useState<FiltersState>(initialFilters);
+  const [filteredItems, setFilteredItems] = useState<any[]>([]);
 
   const {
     data: sourceItems,
@@ -31,16 +32,21 @@ export default function Home() {
     isError: isErrorItems,
     refetch: refetchItems
   } = useQuery({
-    queryKey: ["properties", filtersApplied],
-    queryFn: () => getProperties(filtersApplied)
+    queryKey: ["properties"],
+    queryFn: () => getProperties()
   });
 
-  const visibleItems = useMemo(() => sourceItems ?? [], [sourceItems]);
+  const visibleItems = useMemo(() => filteredItems.length > 0 ? filteredItems : (sourceItems ?? []), [filteredItems, sourceItems]);
 
-  const handleApply = () => setFiltersApplied(filtersDraft);
+  const handleApply = (filtered: any[], appliedFilters: FiltersState) => {
+    setFilteredItems(filtered);
+    setFiltersApplied(appliedFilters);
+  };
+  
   const handleClear = () => {
     setFiltersDraft(initialFilters);
     setFiltersApplied(initialFilters);
+    setFilteredItems([]);
   };
 
   return (

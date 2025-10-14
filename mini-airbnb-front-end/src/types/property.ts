@@ -15,14 +15,14 @@ export type Amenity =
 
 export type PropertyType =
   | 'all'
-  | 'apartment'
-  | 'house'
-  | 'chalet'
-  | 'cabin'
-  | 'flat'
-  | 'loft'
-  | 'studio'
-  | 'penthouse';
+  | 'Apartamento'
+  | 'Casa'
+  | 'Chalé'
+  | 'Cabana'
+  | 'Flat'
+  | 'Loft'
+  | 'Studio'
+  | 'Cobertura';
 
 export type Property = {
   id: number;

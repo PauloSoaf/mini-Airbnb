@@ -4,7 +4,7 @@ import {useMemo} from "react";
 import {Button, Input, InputNumber, Select, Slider, Space, Switch} from "antd";
 import {useTranslations} from "next-intl";
 import {FiltersState} from "@/types/filters";
-import {PropertyItem, PropertyType} from "@/types/property";
+import {PropertyItem} from "@/lib/api/properties";
 
 type FiltersBarProps = {
   value: FiltersState;
@@ -47,24 +47,24 @@ export default function FiltersBar({value, onChange, onApply, onClear, sourceIte
   const propertyTypeOptions = useMemo(
     () =>
       [
-        {value: "all", label: t("type")},
-        {value: "apartment", label: t("types.apartment")},
-        {value: "house", label: t("types.house")},
-        {value: "chalet", label: t("types.chalet")},
-        {value: "cabin", label: t("types.cabin")},
-        {value: "flat", label: t("types.flat")}
-      ] as {value: "all" | PropertyType; label: string}[],
+        { value: "all", label: t("type") },
+        { value: "Apartamento", label: t("types.apartment") },
+        { value: "Casa", label: t("types.house") },
+        { value: "Chalé", label: t("types.chalet") },
+        { value: "Cabana", label: t("types.cabin") },
+        { value: "Flat", label: t("types.flat") }
+      ] as { value: any; label: string }[],
     [t]
   );
 
   const amenitiesOptions = useMemo(
     () => [
-      {value: "Wi-Fi", label: t("amenities.wifi")},
-      {value: "Piscina", label: t("amenities.pool")},
-      {value: "Lareira", label: t("amenities.fireplace")},
-      {value: "Ar-condicionado", label: t("amenities.airConditioning")},
-      {value: "Cozinha", label: t("amenities.kitchen")},
-      {value: "Estacionamento", label: t("amenities.parking")}
+      { value: "wifi", label: t("amenities.wifi") },
+      { value: "piscina", label: t("amenities.pool") },
+      { value: "lareira", label: t("amenities.fireplace") },
+      { value: "ar-condicionado", label: t("amenities.airConditioning") },
+      { value: "cozinha-equipada", label: t("amenities.kitchen") },
+      { value: "garagem", label: t("amenities.parking") }
     ],
     [t]
   );
@@ -114,18 +114,18 @@ export default function FiltersBar({value, onChange, onApply, onClear, sourceIte
               <span className="block text-sm text-[var(--muted)] mb-1">{t("guests")}</span>
               <InputNumber
                 min={1}
-                value={value.guests ?? 1}
+                value={value.guests}
                 className="w-full"
-                onChange={(v) => onChange({...value, guests: Number(v || 0)})}
+                onChange={(v) => onChange({...value, guests: v ? Number(v) : undefined})}
               />
             </div>
             <div>
               <span className="block text-sm text-[var(--muted)] mb-1">{t("bedrooms")}</span>
               <InputNumber
                 min={1}
-                value={value.bedrooms ?? 1}
+                value={value.bedrooms}
                 className="w-full"
-                onChange={(v) => onChange({...value, bedrooms: Number(v || 0)})}
+                onChange={(v) => onChange({...value, bedrooms: v ? Number(v) : undefined})}
               />
             </div>
           </div>

@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Mini-Airbnb
 
-## Getting Started
+Aplicação front-end em Next.js integrada a uma mock API para listagem, filtros, detalhes e simulação de reserva de imóveis, com suporte a i18n, temas e React Query.
 
-First, run the development server:
+Instalação e execução
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Requisitos: Node.js 18+.
+- Backend (mock API):
+  - `cd mock-api-temporada`
+  - `npm install`
+  - `npm start` (disponível em `http://localhost:3001`)
+- Front-end:
+  - `cd mini-airbnb-front-end`
+  - `npm install`
+  - `npm run dev` (disponível em `http://localhost:3000`)
+- Configuração opcional:
+  - Defina `NEXT_PUBLIC_API_BASE_URL` para alterar a URL da API (padrão `http://localhost:3001`).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Listagem de imóveis com imagem, título, localização, preço por noite, rating, quantidade de avaliações e disponibilidade.
+- Filtros por cidade, estado, tipo de imóvel, faixa de preço, hóspedes, quartos, comodidades e somente disponíveis.
+- Página de detalhes com galeria, comodidades, descrição e status de disponibilidade.
+- Simulação de reserva com confirmação via modal e integração à rota `/bookings`.
+- Feedback de carregamento e erro com componentes AntD e mensagens localizadas.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Decisões técnicas
 
-## Learn More
+- Next 15.5 com App Router para rotas dinâmicas por locale e detalhes de imóveis.
+- AntD para UI, com ConfigProvider e tokens ajustados ao tema claro/escuro via `next-themes`.
+- Tailwind v4 para utilitários de layout e tema (CSS custom properties).
+- React Query para cache, revalidação e feedback de estados de rede.
+- `next-intl` para i18n com `en` e `pt`, todas as mensagens de UI usam chaves nos locales.
+- Axios com um cliente centralizado (`src/lib/api/client.ts`) e transformações de dados no módulo de propriedades.
 
-To learn more about Next.js, take a look at the following resources:
+Melhorias futuras
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Validação de inputs de filtros com formulários controlados e schema.
+- Paginação e ordenação na lista.
+- Melhor mapeamento i18n de tipos vindos da API para labels.
+- Testes com Jest e React Testing Library para componentes críticos e hooks.
+- Estados de reserva com datas selecionáveis e cálculo de preço.
