@@ -39,7 +39,15 @@ function AntdWrapper({ children }: PropsWithChildren) {
 }
 
 export default function Providers({ children, messages, locale }: ProvidersProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        staleTime: 60_000,
+        refetchOnWindowFocus: false
+      }
+    }
+  }));
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>

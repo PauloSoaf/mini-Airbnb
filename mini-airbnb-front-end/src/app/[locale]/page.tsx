@@ -41,7 +41,6 @@ export default function Home() {
   useEffect(() => {
     if (isErrorItems && queryError) {
       messageApi.error(t("apiError"));
-      console.error("Erro ao carregar propriedades:", queryError);
     }
   }, [isErrorItems, queryError, messageApi, t]);
 

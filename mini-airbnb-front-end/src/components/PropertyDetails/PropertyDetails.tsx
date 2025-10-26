@@ -19,25 +19,20 @@ export default function PropertyDetails({ id }: Props) {
   });
 
 const booking = useMutation({
-    mutationFn: () =>
-      simulateBooking({
-        propertyId: id!,
-        checkIn: new Date().toISOString(),
-        checkOut: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        guests: 2,
-        customerName: "João",
-      }),
-    onSuccess: () => {
-      messageApi.success({
-        content: t("bookingSuccessMessage"),
-        duration: 4,
-        icon: <span>🎉</span>
-      });
-    },
-    onError: () => {
-      messageApi.error(t("bookingErrorMessage"));
-    }
-  });
+  mutationFn: () =>
+    simulateBooking({
+      propertyId: id!,
+      checkIn: new Date().toISOString(),
+      checkOut: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      guests: 2
+    }),
+  onSuccess: () => {
+    messageApi.success({ content: t("bookingSuccessMessage"), duration: 4 });
+  },
+  onError: () => {
+    messageApi.error(t("bookingErrorMessage"));
+  }
+});
 
   if (isError) {
     return (
