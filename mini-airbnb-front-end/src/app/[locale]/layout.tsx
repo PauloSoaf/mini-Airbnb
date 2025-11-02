@@ -13,7 +13,7 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: "pt" | "en"}>;
+  params: Promise<{locale: string}>;
 }) {
   const {locale} = await params;
   const messages = (await import(`@/i18n/locales/${locale}.json`)).default;
@@ -22,8 +22,8 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body>
         <AntdRegistry>
-          <Providers messages={messages} locale={locale}>
-            <NavBar locale={locale} />
+          <Providers messages={messages} locale={locale as "pt" | "en"}>
+            <NavBar locale={locale as "pt" | "en"} />
             <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
           </Providers>
         </AntdRegistry>

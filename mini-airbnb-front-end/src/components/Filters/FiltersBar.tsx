@@ -9,7 +9,7 @@ import {PropertyItem} from "@/lib/api/properties";
 type FiltersBarProps = {
   value: FiltersState;
   onChange: (next: FiltersState) => void;
-  onApply: (filteredItems: PropertyItem[], appliedFilters: FiltersState) => void;
+  onApply: (filteredItems: PropertyItem[]) => void;
   onClear: () => void;
   sourceItems: PropertyItem[];
 };
@@ -48,30 +48,49 @@ export default function FiltersBar({value, onChange, onApply, onClear, sourceIte
     () =>
       [
         { value: "all", label: t("type") },
-        { value: "Apartamento", label: t("types.apartment") },
-        { value: "Casa", label: t("types.house") },
-        { value: "Chalé", label: t("types.chalet") },
-        { value: "Cabana", label: t("types.cabin") },
-        { value: "Flat", label: t("types.flat") }
-      ] as { value: any; label: string }[],
+        { value: "apartment", label: t("types.apartment") },
+        { value: "house", label: t("types.house") },
+        { value: "studio", label: t("types.studio") },
+        { value: "penthouse", label: t("types.penthouse") },
+        { value: "cabin", label: t("types.cabin") },
+        { value: "condo", label: t("types.condo") },
+        { value: "loft", label: t("types.loft") }
+      ] as { value: string; label: string }[],
     [t]
   );
 
   const amenitiesOptions = useMemo(
     () => [
       { value: "wifi", label: t("amenities.wifi") },
-      { value: "piscina", label: t("amenities.pool") },
-      { value: "lareira", label: t("amenities.fireplace") },
-      { value: "ar-condicionado", label: t("amenities.airConditioning") },
-      { value: "cozinha-equipada", label: t("amenities.kitchen") },
-      { value: "garagem", label: t("amenities.parking") }
+      { value: "pool", label: t("amenities.pool") },
+      { value: "fireplace", label: t("amenities.fireplace") },
+      { value: "air-conditioning", label: t("amenities.airConditioning") },
+      { value: "equipped-kitchen", label: t("amenities.kitchen") },
+      { value: "parking", label: t("amenities.parking") },
+      { value: "smart-tv", label: t("amenities.smartTv") },
+      { value: "washing-machine", label: t("amenities.washingMachine") },
+      { value: "barbecue", label: t("amenities.barbecue") },
+      { value: "balcony", label: t("amenities.balcony") },
+      { value: "ocean-view", label: t("amenities.oceanView") },
+      { value: "pet-friendly", label: t("amenities.petFriendly") },
+      { value: "jacuzzi", label: t("amenities.jacuzzi") },
+      { value: "gym", label: t("amenities.gym") },
+      { value: "mountain-view", label: t("amenities.mountainView") },
+      { value: "beach-access", label: t("amenities.beachAccess") },
+      { value: "beach-proximity", label: t("amenities.beachProximity") },
+      { value: "city-view", label: t("amenities.cityView") },
+      { value: "concierge", label: t("amenities.concierge") },
+      { value: "historic-location", label: t("amenities.historicLocation") },
+      { value: "arts-district", label: t("amenities.artsDistrict") },
+      { value: "garden", label: t("amenities.garden") },
+      { value: "heating", label: t("amenities.heating") }
     ],
     [t]
   );
 
   const handleApply = () => {
     const filtered = filterItems(sourceItems, value);
-    onApply(filtered, value);
+    onApply(filtered);
   };
 
   return (
@@ -89,8 +108,8 @@ export default function FiltersBar({value, onChange, onApply, onClear, sourceIte
         />
         <Select
           placeholder={t("type")}
-          value={(value.type as any) ?? "all"}
-          onChange={(v) => onChange({...value, type: v as any})}
+          value={value.type ?? "all"}
+          onChange={(v) => onChange({...value, type: v})}
           options={propertyTypeOptions}
         />
         <Select

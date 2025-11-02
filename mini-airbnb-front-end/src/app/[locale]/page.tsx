@@ -7,7 +7,7 @@ import {useTranslations} from "next-intl";
 import FiltersBar from "@/components/Filters/FiltersBar";
 import PropertyGrid from "@/components/PropertyGrid/PropertyGrid";
 import {FiltersState} from "@/types/filters";
-import {getProperties} from "@/lib/api/properties";
+import {getProperties, PropertyItem} from "@/lib/api/properties";
 
 const initialFilters: FiltersState = {
   city: "",
@@ -24,8 +24,7 @@ export default function Home() {
   const t = useTranslations();
   const [messageApi, contextHolder] = message.useMessage();
   const [filtersDraft, setFiltersDraft] = useState<FiltersState>(initialFilters);
-  const [filtersApplied, setFiltersApplied] = useState<FiltersState>(initialFilters);
-  const [filteredItems, setFilteredItems] = useState<any[]>([]);
+  const [filteredItems, setFilteredItems] = useState<PropertyItem[]>([]);
 
   const {
     data: sourceItems,
@@ -46,9 +45,8 @@ export default function Home() {
 
   const visibleItems = useMemo(() => filteredItems.length > 0 ? filteredItems : (sourceItems ?? []), [filteredItems, sourceItems]);
 
-  const handleApply = (filtered: any[], appliedFilters: FiltersState) => {
+  const handleApply = (filtered: PropertyItem[]) => {
     setFilteredItems(filtered);
-    setFiltersApplied(appliedFilters);
     if (filtered.length === 0) {
       messageApi.info(t("noResults"));
     }
@@ -56,7 +54,6 @@ export default function Home() {
   
   const handleClear = () => {
     setFiltersDraft(initialFilters);
-    setFiltersApplied(initialFilters);
     setFilteredItems([]);
   };
 

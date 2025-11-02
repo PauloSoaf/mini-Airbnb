@@ -1,5 +1,4 @@
 import {api} from "./client";
-import {FiltersState} from "@/types/filters";
 
 export type PropertyItem = {
   id: string;
@@ -23,30 +22,30 @@ export type PropertyDetail = PropertyItem & {
   images: string[];
 };
 
-const transformItem = (raw: any): PropertyItem => ({
+const transformItem = (raw: Record<string, unknown>): PropertyItem => ({
   id: String(raw.id),
   imageUrl: Array.isArray(raw.images) && raw.images.length ? raw.images[0] : "",
-  title: raw.title,
-  city: raw.location?.city ?? "",
-  state: raw.location?.state ?? "",
-  country: raw.location?.country ?? "",
-  pricePerNight: raw.pricePerNight,
-  rating: raw.rating,
-  reviewsCount: raw.reviewsCount,
-  type: raw.type,
-  isAvailable: raw.isAvailable,
-  bedrooms: raw.bedrooms,
-  guests: raw.maxGuests,
-  amenities: raw.amenities
+  title: raw.title as string,
+  city: (raw.location as Record<string, unknown>)?.city as string ?? "",
+  state: (raw.location as Record<string, unknown>)?.state as string ?? "",
+  country: (raw.location as Record<string, unknown>)?.country as string ?? "",
+  pricePerNight: raw.pricePerNight as number,
+  rating: raw.rating as number,
+  reviewsCount: raw.reviewsCount as number,
+  type: raw.type as string,
+  isAvailable: raw.isAvailable as boolean,
+  bedrooms: raw.bedrooms as number,
+  guests: raw.maxGuests as number,
+  amenities: raw.amenities as string[]
 });
 
-const transformDetail = (raw: any): PropertyDetail => ({
+const transformDetail = (raw: Record<string, unknown>): PropertyDetail => ({
   ...transformItem(raw),
   amenities: Array.isArray(raw.amenities) ? raw.amenities : [],
   images: Array.isArray(raw.images) ? raw.images : []
 });
 
-export const getProperties = async (filters?: FiltersState): Promise<PropertyItem[]> => {
+export const getProperties = async (): Promise<PropertyItem[]> => {
   try {
     const {data} = await api.get("/properties");
     return Array.isArray(data) ? data.map(transformItem) : [];

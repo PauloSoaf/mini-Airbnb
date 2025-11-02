@@ -1,28 +1,38 @@
 export type Amenity =
   | 'wifi'
-  | 'ar-condicionado'
-  | 'garagem'
-  | 'cozinha-equipada'
+  | 'air-conditioning'
+  | 'parking'
+  | 'equipped-kitchen'
   | 'smart-tv'
-  | 'lavadora'
-  | 'piscina'
-  | 'churrasqueira'
-  | 'varanda'
-  | 'vista-mar'
+  | 'washing-machine'
+  | 'pool'
+  | 'barbecue'
+  | 'balcony'
+  | 'ocean-view'
   | 'pet-friendly'
   | 'jacuzzi'
-  | 'academia';
+  | 'gym'
+  | 'fireplace'
+  | 'mountain-view'
+  | 'beach-access'
+  | 'beach-proximity'
+  | 'city-view'
+  | 'concierge'
+  | 'historic-location'
+  | 'arts-district'
+  | 'garden'
+  | 'cabin'
+  | 'heating';
 
 export type PropertyType =
   | 'all'
-  | 'Apartamento'
-  | 'Casa'
-  | 'Chalé'
-  | 'Cabana'
-  | 'Flat'
-  | 'Loft'
-  | 'Studio'
-  | 'Cobertura';
+  | 'apartment'
+  | 'house'
+  | 'studio'
+  | 'penthouse'
+  | 'cabin'
+  | 'condo'
+  | 'loft';
 
 export type Property = {
   id: number;
